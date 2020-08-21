@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>YAML Files &#8212; Converting .crw to .h5</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example Overview" href="exampleoverview.html" />
+    <link rel="prev" title="Regular Expressions" href="regularexpressions.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Converting .crw to .h5</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Kutas Lab .crw to .h5 File Conversion
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="background_info.html">
+   Background Information
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linuxcommands.html">
+     Linux Optional Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="codemaps.html">
+     Code Maps
+    </a>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="timelockandanchors.html">
+       Time locks vs. Anchors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="regularexpressions.html">
+       Regular Expressions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     YAML Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="exampleoverview.html">
+     Example Overview
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="crw2h5_singlesubject.html">
+   Binned, single subject example
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/buildyamlfiles.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#yaml-header">
+   YAML Header
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#yaml-header-extractor">
+   YAML Header Extractor
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="yaml-files">
+<h1>YAML Files<a class="headerlink" href="#yaml-files" title="Permalink to this headline">¶</a></h1>
+<p>YAML is a human readable markup language with easy file structures to quickly create documents that are easily imported to other languages.</p>
+<p>For more information on YAML language: <a class="reference external" href="https://yaml.org/spec/1.2/spec.html">YAML documentation</a></p>
+<div class="section" id="yaml-header">
+<h2>YAML Header<a class="headerlink" href="#yaml-header" title="Permalink to this headline">¶</a></h2>
+<p>The YAML header (yhdr) is an open-ended mechanism for storing extra information with the EEG data that are useful for record keeping or subsequent data analysis. For instance</p>
+<ul class="simple">
+<li><p>recording session information:</p></li>
+<li><p>subject variables, e.g., DOB, meds, neuropsych scores</p></li>
+<li><p>instrument settings, e.g., bioamp gain and filter, electrode locations</p></li>
+</ul>
+<p>Like other Linux files, <code class="docutils literal notranslate"><span class="pre">#</span></code>   can be used to add comments for yourself that you don’t actually want in the data</p>
+<p>yhdr specification:</p>
+<ul class="simple">
+<li><p>Must conform to YAML syntax (can use the Linux command <code class="docutils literal notranslate"><span class="pre">yamllint</span></code> to check for errors</p></li>
+<li><p>Must contain at least one YAML document, may contain more.</p></li>
+<li><p>Each YAML document must contain the key name and a string label for a value, and may contain more keys with values.</p></li>
+</ul>
+<p>Minimal requirements for a yhdr:</p>
+<div class="admonition-simple-example admonition">
+<p class="admonition-title">Simple Example</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>## A minimal, yet legal yhdr file
+---
+name: pointless_yhdr
+</pre></div>
+</div>
+</div>
+<p>A more realistic example:</p>
+<div class="admonition-simple-example admonition">
+<p class="admonition-title">Simple Example</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># stmath yhdr file
+--- 
+name: runsheet
+subid: stm02
+experiment: stmath
+experimenter: Anna
+hand: right
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="yaml-header-extractor">
+<h2>YAML Header Extractor<a class="headerlink" href="#yaml-header-extractor" title="Permalink to this headline">¶</a></h2>
+<p>If you are putting information in your yhdr beyond the simple example that you are not planning on merging in some other way, you will need to create a YAML header extraxtor (yhdx) file</p>
+<p>For each key/value pair you want to extract, you will write what you would like the key to extract as in your database. This does not have to be for every line in your yhdr, and the names for the database can either be the same or different from the key names.</p>
+<p>This document has the same specifications as the yhdr above. In addition, the syntax for naming the columns is<br />
+<code class="docutils literal notranslate"><span class="pre">key:</span> <span class="pre">column</span> <span class="pre">name</span></code></p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># stmath yhdx file
+--- 
+name: runsheet
+
+experimenter: experimenter
+hand: handedness
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="regularexpressions.html" title="previous page">Regular Expressions</a>
+    <a class='right-next' id="next-link" href="exampleoverview.html" title="next page">Example Overview</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Anna M. Stoermann<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+  </body>
+</html>
