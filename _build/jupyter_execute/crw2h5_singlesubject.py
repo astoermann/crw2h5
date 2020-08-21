@@ -2,7 +2,7 @@
 # Binned, single subject example 
 *See [mkpy docs](https://kutaslab.github.io/mkpy/Quick%20Start.html) for explanations of all the commands and files. Click on the command to find it in the glossary and learn more. The glossary links are incuded for each command below* <br>
 ## Conda environment
-*always activate a conda environment before starting. This notebook uses mkconda 0.0.11*
+*always activate a conda environment before starting. This notebook uses [mkconda](https://anaconda.org/kutaslab/mkconda) 0.0.11*
 
 conda activate mkconda-0.0.11
 
