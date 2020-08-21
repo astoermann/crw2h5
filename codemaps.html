@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Code Maps &#8212; Converting .crw to .h5</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Time locks vs. Anchors" href="timelockandanchors.html" />
+    <link rel="prev" title="Linux Optional Commands" href="linuxcommands.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Converting .crw to .h5</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Kutas Lab .crw to .h5 File Conversion
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="background_info.html">
+   Background Information
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linuxcommands.html">
+     Linux Optional Commands
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Code Maps
+    </a>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="timelockandanchors.html">
+       Time locks vs. Anchors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="regularexpressions.html">
+       Regular Expressions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="buildyamlfiles.html">
+     YAML Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="exampleoverview.html">
+     Example Overview
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="crw2h5_singlesubject.html">
+   Binned, single subject example
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/codemaps.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples">
+   Examples
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simple-binned-code-map">
+     Simple, binned code map
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#single-trial-code-map-with-reaction-times">
+     Single trial code map with reaction times
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="code-maps">
+<h1>Code Maps<a class="headerlink" href="#code-maps" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Can be either a ytbl (yaml markup format), an excel spreadsheet (xlsx), or a txt file</p></li>
+<li><p>Figure out what code sequences you need to label of the data and use regular expressions to fill in the column ‘regexp’</p></li>
+<li><p>Regexp is the only required column and is where you put in the regular expersion that matches the code pattern you are trying to match</p></li>
+<li><p>You can name the other columns whatever you want and add as many or as few as you want</p></li>
+</ul>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="simple-binned-code-map">
+<h3>Simple, binned code map<a class="headerlink" href="#simple-binned-code-map" title="Permalink to this headline">¶</a></h3>
+<p>If your coding scheme is fairly simple, you can use a ytbl format to tag the event codes in the table. This is only really recommended for binned analyses or analyses with few trials.</p>
+<div class="admonition-ytbl-example admonition">
+<p class="admonition-title">ytbl example</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>---
+name: stmath  
+columns:
+	[condition, regexp, STthreat]
+rows:
+	- [CorrectNoST, &#39;(#11[0-9]{3})&#39;, NoST]
+	- [IncorrectNoST, &#39;(#12[0-9]{3})&#39;, NoST]
+	- [RelatedNoST, &#39;(#13[0-9]{3})&#39;, NoST]
+	- [CorrectST, &#39;(#14[0-9]{3})&#39;, ST]
+	- [IncorrectST, &#39;(#15[0-9]{3})&#39;, ST]
+	- [RelatedST, &#39;(#16[0-9]{3})&#39;, ST]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="single-trial-code-map-with-reaction-times">
+<h3>Single trial code map with reaction times<a class="headerlink" href="#single-trial-code-map-with-reaction-times" title="Permalink to this headline">¶</a></h3>
+<p>Easiest way to build single trial code maps is in Excel. The extension must be .xlsx when it’s saved.</p>
+<ul class="simple">
+<li><p>More complicated with many more variables added</p></li>
+<li><p>Each stimulus has one line with one or more codes being captured.</p>
+<ul>
+<li><p>Reaction times:</p>
+<ul>
+<li><p>This example is complicated for getting reaction times, but if you don’t have an event code in between your stimulus and where the reaction time should be measured, you can just put the # on the button press code</p></li>
+<li><p>Reaction times will only be recorded for the product stimuli (i.e., when the Stimulus column = P) in this example</p></li>
+</ul>
+</li>
+<li><p>Notice that each stimulus has two lines since there is an incorrect and a correct response</p></li>
+</ul>
+</li>
+<li><p>regexp is still the only required column.</p>
+<ul>
+<li><p>If you use wild carding (*) be very carfeul that you actually get what you want</p></li>
+<li><p>This is an item analysis code map, so each row in corresponds to a different regexp</p></li>
+</ul>
+</li>
+<li><p>If you put in ccode, it should match the condition codes you used on DIG (i.e., 0 for cals, 1 for experiment, etc.). You can use this option to be able to plot your cals over top your actual data, but you will want to be careful to drop them later during data analysis if you do this.</p></li>
+</ul>
+<div class="admonition-xlsx-example admonition">
+<p class="admonition-title">xlsx example</p>
+<p><img alt="singletrialcodemap" src="_images/stmath_code_map_new.png" /></p>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="linuxcommands.html" title="previous page">Linux Optional Commands</a>
+    <a class='right-next' id="next-link" href="timelockandanchors.html" title="next page">Time locks vs. Anchors</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Anna M. Stoermann<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+  </body>
+</html>
