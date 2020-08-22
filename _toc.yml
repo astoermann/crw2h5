@@ -8,5 +8,5 @@
         - file: regularexpressions
     - file: buildyamlfiles
     - file: exampleoverview
-- file: crw2h5_singlesubject
+- file: singlesubject_binned
 - file: spudtr

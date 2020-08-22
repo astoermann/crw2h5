@@ -74,9 +74,8 @@ stmath_df = epf.center_eeg(
 
 ## Artifact Rejection
 method used for if you created the h5 file using an .x.log to preserve garv flags<br>
-<br>
 ```{note} 
-above I renamed the appropriate column to garv_reject to be more transparent about what I was doing
+Above I renamed the appropriate column to garv_reject to be more transparent about what I was doing
 ```
 
 good_epochs = epf.drop_bad_epochs(
