@@ -18,7 +18,7 @@ from spudtr import epf
 MKPY_DIR = Path("../../mkpy")
 
 stmath_df = pd.read_hdf(MKPY_DIR / ("stmath.epochs.h5"), key='stmath')
-pd.set_option('display.max_columns', None)
+## Display the data to check it loaded in correctly
 stmath_df[['epoch_id','match_time','data_group','Stimulus','response_ticks','Rhand','Lhand', 'MiPf']]
 
 ## Change column names and specify variables for later
@@ -41,11 +41,15 @@ CHANNELS = [
 ]
 
 ## Re-referencing
-can do linked pair (from one online reference to the average of two), new common reference (pick a new reference), or common average reference (subtract the average of all channels from each channel)<br>
+Can do linked pair (from one online reference to the average of two), new common reference (pick a new reference), or common average reference (subtract the average of all channels from each channel)<br>
 <br>
 This example uses linked pair since it is what we most commonly use
 
-epf.re_reference(
+```{note}
+There is no output for the re-referencing, baselining, or artifact rejection unless you ask for it since we are overwritting the dataframe each time to save the data transformation.
+```
+
+stmath_df = epf.re_reference(
     stmath_df,
     CHANNELS,
     'A2',
@@ -71,7 +75,9 @@ stmath_df = epf.center_eeg(
 ## Artifact Rejection
 method used for if you created the h5 file using an .x.log to preserve garv flags<br>
 <br>
-*note: above I renamed the appropriate column to garv_reject to be more transparent about what I was doing
+```{note} 
+above I renamed the appropriate column to garv_reject to be more transparent about what I was doing
+```
 
 good_epochs = epf.drop_bad_epochs(
     stmath_df,
@@ -86,4 +92,3 @@ print("Number of good epoch ids: ", len(good_epochs["epoch_id"].unique()))
 ## Save file to be loaded later
 
 good_epochs.to_hdf('../../mkpy/stmath_cleaned_epochs.h5', key='stmath_good_epochs', mode='w')
-
