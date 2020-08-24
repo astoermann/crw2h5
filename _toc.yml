@@ -9,4 +9,5 @@
     - file: buildyamlfiles
     - file: exampleoverview
 - file: singlesubject_binned
+- file: multisubject_singletrial
 - file: spudtr
