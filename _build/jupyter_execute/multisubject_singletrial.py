@@ -14,12 +14,12 @@ import pandas as pd
 
 ## Build the file
 There is now a loop to incorporate multiple subjects into one file. This makes the following changes:
-* A new variable is added at the beginning with a list of all the subjects you want to include in the loop/file (sids)
-* Creating the file names now needs to be under the loop for the data files (not the h5 files since there is one file 
-* mk5 commands to create the continuous file (create_mkdata, append_mkdata, calibrate_mkdata) go under the loop
+* A variable is added at the beginning with a list of the subjects you want to include in the loop/file (sids)
+* Creating the file names is under the loop for the data files (not the h5 files since there is one file) 
+* mk5 commands to create the continuous file go under the loop
 * An 'if' statement is used for the append_mkdata command for an extra cal file
 * Commands after the continuous file is built (get_event_table, set_epochs, export_epochs) are done on the entire file and aren't in the loop <br>
-* If you need a refresher on any of the commands, see {doc}`crw2h5_singlesubject`
+* If you need a refresher on any of the commands, see {doc}`singlesubject_binned`
 
 A time function has been added at the top of the cell to demonstrate that the file now takes a while to build
 
@@ -88,9 +88,10 @@ The warnings above:
 
 ```
 
-### Do data tranformations in pandas to the event table before exporting
-You do not have to do this step, but it is useful to know that you can 'break in' to the pandas data frame to add more data or drop rows to make the epochs file not as large when you export it
-#### Add extra variables across all columns that are not imported with the header
+### Data tranformations to the event table
+You do not have to do this step, but it is useful to know that you can 'break in' to the pandas data frame to add more data or drop rows to make the epochs file not as large when you export it. 
+#### Add extra variables across all columns
+These are new variables that you want columns for that are not imported with the header or code map (useful if you are combining multiple experiments but want one code map)
 
 # show the column names before adding variables
 display(event_table_raw.columns)
@@ -100,7 +101,7 @@ event_table_raw['expt'] = "expt_1"
 # show the a few variables from the data frame with the new column added
 event_table_raw[['data_group','crw_ticks','regexp','match_code','Stimulus','expt', 'anchor_tick_delta']].head(6)
 
-#### Merge response ticks onto the stimulus row for reaction time tasks
+#### Get reaction times
 *Note: this example has an event in between the one we want to time lock too and the one we want to get a reaction time for. If you do not have this problem, then you just need to drop the extra capture group lines.*
 * *Use code similar to the first line below (.query)*
 * *Query for anchor_tick_delta > or < 0 depending on where you put the anchor (#)*
@@ -140,16 +141,17 @@ clean_rt.reset_index(['anchor_code'],inplace=True)
 # response ticks only merge onto the product rows since that is what the response is to
 clean_rt[['crw_ticks','regexp','match_code','Stimulus', 'expt', 'anchor_tick_delta','response_ticks']].head(8)
 
-#### Merge in data from an Excel spreadsheet
+#### Merge in data from Excel
 
 # set columns of interest from the spreadsheet
 npsych_coi = [
-    'Subj', 'Gndr', 'Age', 'NativeLang', 'Bilingual', 'Major', 'GoodMath', 'Rhand',
-    'Lhand', 'Famhand', 'WhoLH', 'ARTCorrect', 'ARTFoils', 'MRTCorrect',
-    'MRTFoils', 'MathAnxiety1', 'MathAnxiety2', 'BEM_M', 'BEM_F', 'BEM_N',
-    'DS_F', 'DS_B', 'DS_H'
+    'Subj', 'Gndr', 'Age', 'NativeLang', 'Bilingual', 'Major', 'GoodMath',
+    'Rhand','Lhand', 'Famhand', 'WhoLH', 'ARTCorrect', 'ARTFoils', 
+    'MRTCorrect','MRTFoils', 'MathAnxiety1', 'MathAnxiety2', 
+    'BEM_M', 'BEM_F', 'BEM_N','DS_F', 'DS_B', 'DS_H'
 ]
-# read the Excel spreadsheet into pandas and do some data transformation; look up pd.read_excel for arguments
+# read the Excel spreadsheet into pandas and do some data transformation; 
+# look up pd.read_excel for arguments
 stmath_neuro = (
     pd.read_excel(
         "/home/kadelong/Exps/STMath/Neuro/Neuro.xlsx",
@@ -159,10 +161,11 @@ stmath_neuro = (
     .rename(columns={"Subj": "data_group"})
     .set_index('data_group')
 )
-# check the dataframe imported properly; display only a few variables for demonstration
+# check the data imported properly; display only a few variables for demo
 stmath_neuro[['Rhand','Lhand','ARTCorrect','MRTCorrect', 'DS_F']].head()
 
-#### Merge dataframes together to get a final event_table dataframe
+#### Merge dataframes together 
+This gets a final event_table dataframe for exporting by merging all the other dataframes you already created.
 
 # merge neuropsych dataframe with response ticks dataframe
 event_table=clean_rt.join(stmath_neuro, on="data_group")
@@ -189,7 +192,7 @@ The warnings above `data error` happens when the pause mark happened outside of 
 ## Export epochs
 
 # set columns of interest for export to reduce file size, can also reorder thiem this way. 
-# some columns are required for other software in the lab, so be careful about what you drop
+# some columns are required for other software in the lab, so be careful when dropping
 COI = ['epoch_id','match_time','data_group', 'Item', 'List', 
        'ThreatCondition', 'Condition', 'Stimulus', 'ResponseAccuracy', 
        'Operand1', 'Operand2', 'Operand3', 'ShownProduct', 'CorrectProduct',
