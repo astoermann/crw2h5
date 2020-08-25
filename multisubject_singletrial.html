@@ -186,28 +186,28 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#do-data-tranformations-in-pandas-to-the-event-table-before-exporting">
-     Do data tranformations in pandas to the event table before exporting
+    <a class="reference internal nav-link" href="#data-tranformations-to-the-event-table">
+     Data tranformations to the event table
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#add-extra-variables-across-all-columns-that-are-not-imported-with-the-header">
-       Add extra variables across all columns that are not imported with the header
+      <a class="reference internal nav-link" href="#add-extra-variables-across-all-columns">
+       Add extra variables across all columns
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#merge-response-ticks-onto-the-stimulus-row-for-reaction-time-tasks">
-       Merge response ticks onto the stimulus row for reaction time tasks
+      <a class="reference internal nav-link" href="#get-reaction-times">
+       Get reaction times
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#merge-in-data-from-an-excel-spreadsheet">
-       Merge in data from an Excel spreadsheet
+      <a class="reference internal nav-link" href="#merge-in-data-from-excel">
+       Merge in data from Excel
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#merge-dataframes-together-to-get-a-final-event-table-dataframe">
-       Merge dataframes together to get a final event_table dataframe
+      <a class="reference internal nav-link" href="#merge-dataframes-together">
+       Merge dataframes together
       </a>
      </li>
     </ul>
@@ -257,12 +257,12 @@
 <h2>Build the file<a class="headerlink" href="#build-the-file" title="Permalink to this headline">¶</a></h2>
 <p>There is now a loop to incorporate multiple subjects into one file. This makes the following changes:</p>
 <ul class="simple">
-<li><p>A new variable is added at the beginning with a list of all the subjects you want to include in the loop/file (sids)</p></li>
-<li><p>Creating the file names now needs to be under the loop for the data files (not the h5 files since there is one file</p></li>
-<li><p>mk5 commands to create the continuous file (create_mkdata, append_mkdata, calibrate_mkdata) go under the loop</p></li>
+<li><p>A variable is added at the beginning with a list of the subjects you want to include in the loop/file (sids)</p></li>
+<li><p>Creating the file names is under the loop for the data files (not the h5 files since there is one file)</p></li>
+<li><p>mk5 commands to create the continuous file go under the loop</p></li>
 <li><p>An ‘if’ statement is used for the append_mkdata command for an extra cal file</p></li>
 <li><p>Commands after the continuous file is built (get_event_table, set_epochs, export_epochs) are done on the entire file and aren’t in the loop <br></p></li>
-<li><p>If you need a refresher on any of the commands, see <span class="xref std std-doc">crw2h5_singlesubject</span></p></li>
+<li><p>If you need a refresher on any of the commands, see <a class="reference internal" href="singlesubject_binned.html"><span class="doc">Binned, single subject example</span></a></p></li>
 </ul>
 <p>A time function has been added at the top of the cell to demonstrate that the file now takes a while to build</p>
 <p>Code Map:</p>
@@ -640,9 +640,7 @@ Calibrating block /stm07/dblock_0 of 7: (122112,)
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Calibrating block /stm08/dblock_0 of 11: (82176,)  
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Calibrating block /stm08/dblock_1 of 11: (40704,)  
+Calibrating block /stm08/dblock_1 of 11: (40704,)  
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Calibrating block /stm08/dblock_2 of 11: (122368,)  
@@ -891,9 +889,7 @@ Calibrating block /stm19/dblock_0 of 7: (104448,)
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Found cals in /stm20/dblock_5
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Calibrating block /stm20/dblock_0 of 6: (105984,)  
+Calibrating block /stm20/dblock_0 of 6: (105984,)  
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Calibrating block /stm20/dblock_1 of 6: (260864,)  
@@ -1950,8 +1946,8 @@ the ccode column in the codemap.
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>searching codes in: stm35/dblock_6
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>CPU times: user 1h 55min 1s, sys: 1min 5s, total: 1h 56min 7s
-Wall time: 1h 56min 15s
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>CPU times: user 1h 57min 49s, sys: 1min 14s, total: 1h 59min 3s
+Wall time: 1h 59min 8s
 </pre></div>
 </div>
 </div>
@@ -1962,11 +1958,12 @@ Wall time: 1h 56min 15s
 <p><code class="docutils literal notranslate"><span class="pre">LogRawEventCodeMismatch</span></code> is to check the data and make sure it is okay that the raw and log file event codes mismatch. This happens sometimes when you pause DIG and should be fine as long as the mismatch is trailing events (as in this case).</p>
 <p><code class="docutils literal notranslate"><span class="pre">dropping</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">bounds</span></code> happens when the pause mark happened outside of the window you set for cals to be measured (i.e., -40ms to 40ms)</p>
 </div>
-<div class="section" id="do-data-tranformations-in-pandas-to-the-event-table-before-exporting">
-<h3>Do data tranformations in pandas to the event table before exporting<a class="headerlink" href="#do-data-tranformations-in-pandas-to-the-event-table-before-exporting" title="Permalink to this headline">¶</a></h3>
-<p>You do not have to do this step, but it is useful to know that you can ‘break in’ to the pandas data frame to add more data or drop rows to make the epochs file not as large when you export it</p>
-<div class="section" id="add-extra-variables-across-all-columns-that-are-not-imported-with-the-header">
-<h4>Add extra variables across all columns that are not imported with the header<a class="headerlink" href="#add-extra-variables-across-all-columns-that-are-not-imported-with-the-header" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="data-tranformations-to-the-event-table">
+<h3>Data tranformations to the event table<a class="headerlink" href="#data-tranformations-to-the-event-table" title="Permalink to this headline">¶</a></h3>
+<p>You do not have to do this step, but it is useful to know that you can ‘break in’ to the pandas data frame to add more data or drop rows to make the epochs file not as large when you export it.</p>
+<div class="section" id="add-extra-variables-across-all-columns">
+<h4>Add extra variables across all columns<a class="headerlink" href="#add-extra-variables-across-all-columns" title="Permalink to this headline">¶</a></h4>
+<p>These are new variables that you want columns for that are not imported with the header or code map (useful if you are combining multiple experiments but want one code map)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the column names before adding variables</span>
@@ -1988,7 +1985,7 @@ Wall time: 1h 56min 15s
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_full-width tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># code for experiment</span>
 <span class="n">event_table_raw</span><span class="p">[</span><span class="s1">&#39;expt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;expt_1&quot;</span>
@@ -2091,14 +2088,14 @@ Wall time: 1h 56min 15s
 </div></div></div>
 </div>
 </div>
-<div class="section" id="merge-response-ticks-onto-the-stimulus-row-for-reaction-time-tasks">
-<h4>Merge response ticks onto the stimulus row for reaction time tasks<a class="headerlink" href="#merge-response-ticks-onto-the-stimulus-row-for-reaction-time-tasks" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="get-reaction-times">
+<h4>Get reaction times<a class="headerlink" href="#get-reaction-times" title="Permalink to this headline">¶</a></h4>
 <p><em>Note: this example has an event in between the one we want to time lock too and the one we want to get a reaction time for. If you do not have this problem, then you just need to drop the extra capture group lines.</em></p>
 <ul class="simple">
 <li><p><em>Use code similar to the first line below (.query)</em></p></li>
 <li><p><em>Query for anchor_tick_delta &gt; or &lt; 0 depending on where you put the anchor (#)</em></p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_full-width tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># pull out the rows of the dataframe with positive response ticks(i.e, after the anchor) and copy to new dataframe</span>
 <span class="n">rt_df</span> <span class="o">=</span> <span class="n">event_table_raw</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;anchor_tick_delta &gt; 0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -2171,7 +2168,7 @@ Wall time: 1h 56min 15s
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_full-width tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#get clean rows of the dataframe for merging (i.e., drop the two capture groups that shouldn&#39;t have time-locked epochs)</span>
 <span class="n">clean_events</span> <span class="o">=</span> <span class="n">event_table_raw</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;log_evcodes &lt; 20000 and anchor_tick_delta &lt;= 0&#39;</span><span class="p">)</span>
@@ -2283,7 +2280,7 @@ Wall time: 1h 56min 15s
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_full-width docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># merge response ticks and clean dataframes together </span>
 <span class="n">clean_rt</span> <span class="o">=</span> <span class="n">clean_events</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rt_df</span><span class="p">,</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;data_group&#39;</span><span class="p">,</span><span class="s1">&#39;anchor_code&#39;</span><span class="p">])</span>
@@ -2421,18 +2418,19 @@ Wall time: 1h 56min 15s
 </div></div></div>
 </div>
 </div>
-<div class="section" id="merge-in-data-from-an-excel-spreadsheet">
-<h4>Merge in data from an Excel spreadsheet<a class="headerlink" href="#merge-in-data-from-an-excel-spreadsheet" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="merge-in-data-from-excel">
+<h4>Merge in data from Excel<a class="headerlink" href="#merge-in-data-from-excel" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set columns of interest from the spreadsheet</span>
 <span class="n">npsych_coi</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;Subj&#39;</span><span class="p">,</span> <span class="s1">&#39;Gndr&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;NativeLang&#39;</span><span class="p">,</span> <span class="s1">&#39;Bilingual&#39;</span><span class="p">,</span> <span class="s1">&#39;Major&#39;</span><span class="p">,</span> <span class="s1">&#39;GoodMath&#39;</span><span class="p">,</span> <span class="s1">&#39;Rhand&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Lhand&#39;</span><span class="p">,</span> <span class="s1">&#39;Famhand&#39;</span><span class="p">,</span> <span class="s1">&#39;WhoLH&#39;</span><span class="p">,</span> <span class="s1">&#39;ARTCorrect&#39;</span><span class="p">,</span> <span class="s1">&#39;ARTFoils&#39;</span><span class="p">,</span> <span class="s1">&#39;MRTCorrect&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;MRTFoils&#39;</span><span class="p">,</span> <span class="s1">&#39;MathAnxiety1&#39;</span><span class="p">,</span> <span class="s1">&#39;MathAnxiety2&#39;</span><span class="p">,</span> <span class="s1">&#39;BEM_M&#39;</span><span class="p">,</span> <span class="s1">&#39;BEM_F&#39;</span><span class="p">,</span> <span class="s1">&#39;BEM_N&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;DS_F&#39;</span><span class="p">,</span> <span class="s1">&#39;DS_B&#39;</span><span class="p">,</span> <span class="s1">&#39;DS_H&#39;</span>
+    <span class="s1">&#39;Subj&#39;</span><span class="p">,</span> <span class="s1">&#39;Gndr&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;NativeLang&#39;</span><span class="p">,</span> <span class="s1">&#39;Bilingual&#39;</span><span class="p">,</span> <span class="s1">&#39;Major&#39;</span><span class="p">,</span> <span class="s1">&#39;GoodMath&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Rhand&#39;</span><span class="p">,</span><span class="s1">&#39;Lhand&#39;</span><span class="p">,</span> <span class="s1">&#39;Famhand&#39;</span><span class="p">,</span> <span class="s1">&#39;WhoLH&#39;</span><span class="p">,</span> <span class="s1">&#39;ARTCorrect&#39;</span><span class="p">,</span> <span class="s1">&#39;ARTFoils&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;MRTCorrect&#39;</span><span class="p">,</span><span class="s1">&#39;MRTFoils&#39;</span><span class="p">,</span> <span class="s1">&#39;MathAnxiety1&#39;</span><span class="p">,</span> <span class="s1">&#39;MathAnxiety2&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;BEM_M&#39;</span><span class="p">,</span> <span class="s1">&#39;BEM_F&#39;</span><span class="p">,</span> <span class="s1">&#39;BEM_N&#39;</span><span class="p">,</span><span class="s1">&#39;DS_F&#39;</span><span class="p">,</span> <span class="s1">&#39;DS_B&#39;</span><span class="p">,</span> <span class="s1">&#39;DS_H&#39;</span>
 <span class="p">]</span>
-<span class="c1"># read the Excel spreadsheet into pandas and do some data transformation; look up pd.read_excel for arguments</span>
+<span class="c1"># read the Excel spreadsheet into pandas and do some data transformation; </span>
+<span class="c1"># look up pd.read_excel for arguments</span>
 <span class="n">stmath_neuro</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span>
         <span class="s2">&quot;/home/kadelong/Exps/STMath/Neuro/Neuro.xlsx&quot;</span><span class="p">,</span>
@@ -2442,7 +2440,7 @@ Wall time: 1h 56min 15s
     <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Subj&quot;</span><span class="p">:</span> <span class="s2">&quot;data_group&quot;</span><span class="p">})</span>
     <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;data_group&#39;</span><span class="p">)</span>
 <span class="p">)</span>
-<span class="c1"># check the dataframe imported properly; display only a few variables for demonstration</span>
+<span class="c1"># check the data imported properly; display only a few variables for demo</span>
 <span class="n">stmath_neuro</span><span class="p">[[</span><span class="s1">&#39;Rhand&#39;</span><span class="p">,</span><span class="s1">&#39;Lhand&#39;</span><span class="p">,</span><span class="s1">&#39;ARTCorrect&#39;</span><span class="p">,</span><span class="s1">&#39;MRTCorrect&#39;</span><span class="p">,</span> <span class="s1">&#39;DS_F&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2527,9 +2525,10 @@ Wall time: 1h 56min 15s
 </div></div></div>
 </div>
 </div>
-<div class="section" id="merge-dataframes-together-to-get-a-final-event-table-dataframe">
-<h4>Merge dataframes together to get a final event_table dataframe<a class="headerlink" href="#merge-dataframes-together-to-get-a-final-event-table-dataframe" title="Permalink to this headline">¶</a></h4>
-<div class="cell docutils container">
+<div class="section" id="merge-dataframes-together">
+<h4>Merge dataframes together<a class="headerlink" href="#merge-dataframes-together" title="Permalink to this headline">¶</a></h4>
+<p>This gets a final event_table dataframe for exporting by merging all the other dataframes you already created.</p>
+<div class="cell tag_full-width docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># merge neuropsych dataframe with response ticks dataframe</span>
 <span class="n">event_table</span><span class="o">=</span><span class="n">clean_rt</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stmath_neuro</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;data_group&quot;</span><span class="p">)</span>
@@ -2744,7 +2743,7 @@ Wall time: 1h 56min 15s
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set columns of interest for export to reduce file size, can also reorder thiem this way. </span>
-<span class="c1"># some columns are required for other software in the lab, so be careful about what you drop</span>
+<span class="c1"># some columns are required for other software in the lab, so be careful when dropping</span>
 <span class="n">COI</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;epoch_id&#39;</span><span class="p">,</span><span class="s1">&#39;match_time&#39;</span><span class="p">,</span><span class="s1">&#39;data_group&#39;</span><span class="p">,</span> <span class="s1">&#39;Item&#39;</span><span class="p">,</span> <span class="s1">&#39;List&#39;</span><span class="p">,</span> 
        <span class="s1">&#39;ThreatCondition&#39;</span><span class="p">,</span> <span class="s1">&#39;Condition&#39;</span><span class="p">,</span> <span class="s1">&#39;Stimulus&#39;</span><span class="p">,</span> <span class="s1">&#39;ResponseAccuracy&#39;</span><span class="p">,</span> 
        <span class="s1">&#39;Operand1&#39;</span><span class="p">,</span> <span class="s1">&#39;Operand2&#39;</span><span class="p">,</span> <span class="s1">&#39;Operand3&#39;</span><span class="p">,</span> <span class="s1">&#39;ShownProduct&#39;</span><span class="p">,</span> <span class="s1">&#39;CorrectProduct&#39;</span><span class="p">,</span>
