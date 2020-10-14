@@ -52,7 +52,7 @@ capture a subpattern or group within the pattern
 ```{admonition} Example
 `(1234) 56 78` &nbsp; captures the group `1234` &nbsp; that is followed by `56 78`
 
-`(\d234) 56 78` &nbsp; captures any group of digits ending in `234` &nbsp; followed by &nbsp; `56 78`
+`(\d234) 56 78` &nbsp; captures any group of 4 digits ending in `234` &nbsp; followed by &nbsp; `56 78`
 
 `(\d{4})` &nbsp; captures any group of 4-digits 
 ```
